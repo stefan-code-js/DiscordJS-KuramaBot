@@ -1,0 +1,56 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:DiscordJS-KuramaBot}/database.sqlite",
+            "name": "adrianstefan"
+        }
+    ],
+    "sqltools.useNodeRuntime": true,
+    
+        // Set a colorful theme for your terminal
+        "workbench.colorTheme": "One Monokai",  // Change to your favorite theme
+      
+        // Set the default terminal to the integrated one
+        "terminal.integrated.defaultProfile.windows": "Command Prompt",  // On Windows
+        "terminal.integrated.defaultProfile.linux": "bash",  // On Linux
+        "terminal.integrated.defaultProfile.osx": "bash",  // On macOS
+        
+        // Enable terminal's colorful output (true by default)
+        "terminal.integrated.drawBoldTextInBrightColors": true,
+      
+        // Customizing terminal colors
+        "workbench.colorCustomizations": {
+          "terminal.background": "#1e1e1e",  // Dark background
+          "terminal.foreground": "#d4d4d4",  // Light text for readability
+          "terminal.ansiBlack": "#2e3436",
+          "terminal.ansiBlue": "#3465a4",
+          "terminal.ansiBrightBlack": "#555753",
+          "terminal.ansiBrightBlue": "#729fcf",
+          "terminal.ansiBrightCyan": "#34e2e2",
+          "terminal.ansiBrightGreen": "#8ae234",
+          "terminal.ansiBrightMagenta": "#ad7fa8",
+          "terminal.ansiBrightRed": "#ef2929",
+          "terminal.ansiBrightWhite": "#eeeeec",
+          "terminal.ansiBrightYellow": "#fce94f",
+          "terminal.ansiCyan": "#06989a",
+          "terminal.ansiGreen": "#4e9a06",
+          "terminal.ansiMagenta": "#75507b",
+          "terminal.ansiRed": "#cc0000",
+          "terminal.ansiWhite": "#d3d7cf",
+          "terminal.ansiYellow": "#c4a000"
+        },
+      
+        // Change the font style in the terminal
+        "terminal.integrated.fontFamily": "Fira Code, Consolas, 'Courier New', monospace",  // Choose a good-looking font
+        "terminal.integrated.fontSize": 14,  // Adjust to your preference
+        "terminal.integrated.fontWeight": "normal",  // You can change this to "bold" for a stronger look
+      
+        // Enable font ligatures for better readability
+        "editor.fontLigatures": true,
+      
+        // Optional: Set transparency (works with some themes)
+        "terminal.integrated.background": "#1e1e1eCC",  // CC makes it slightly transparent
+      
+}
