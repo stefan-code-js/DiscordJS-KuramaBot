@@ -8,8 +8,8 @@ const shopItems = {
 const { prefix } = require('../../config.json');
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('shop')
-    .setDescription('Shop commands')
+    .setName('market')
+    .setDescription('market commands')
     .addSubcommand(subcommand =>
       subcommand
         .setName('view')
