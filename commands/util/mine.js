@@ -1,86 +1,61 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Users } = require('../../models');
-const mineIcons = require('../util/mineIcons'); // Adjust path as per your project structure
-const cooldowns = new Map();
+const { User, Inventory } = require('../models');
+const { randomizeMiningRewards, decreaseDurability } = require('../utils/currency');
+const { MessageActionRow, MessageButton } = require('discord.js');
+const cooldowns = new Map(); // To handle command cooldowns.
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('mine')
-    .setDescription('Mine for random items, coins, and XP with a 5-minute cooldown'),
+    data: new SlashCommandBuilder()
+        .setName('mine')
+        .setDescription('Mine for valuable minerals and items.'),
 
-  async execute(interaction) {
-    try {
-      const userId = interaction.user.id;
+    async execute(interaction) {
+        const userId = interaction.user.id;
 
-      // Cooldown logic (5 minutes)
-      const cooldownTime = 5 * 60 * 1000; // 5 minutes in milliseconds
-      const lastMineTime = cooldowns.get(userId);
-      const now = Date.now();
+        // Check for cooldown
+        if (cooldowns.has(userId)) {
+            const expirationTime = cooldowns.get(userId) + 300000; // 5 minutes cooldown
+            if (Date.now() < expirationTime) {
+                const timeLeft = (expirationTime - Date.now()) / 1000;
+                return interaction.reply(`⛏️ You need to wait ${Math.ceil(timeLeft)} seconds before mining again.`);
+            }
+        }
 
-      if (lastMineTime && now - lastMineTime < cooldownTime) {
-        const remainingTime = cooldownTime - (now - lastMineTime);
-        const minutesLeft = Math.floor(remainingTime / 60000);
-        const secondsLeft = Math.floor((remainingTime % 60000) / 1000);
-        return interaction.reply(`⏳ You need to wait **${minutesLeft} minutes and ${secondsLeft} seconds** before mining again.`);
-      }
+        // Check if user has a pickaxe
+        const userInventory = await Inventory.findOne({ where: { userId, itemName: 'Pickaxe' } });
+        if (!userInventory || userInventory.durability <= 0) {
+            return interaction.reply('⛏️ You don\'t have a pickaxe, or your pickaxe is broken. Buy one from the shop and equip it!');
+        }
 
-      // Update cooldown
-      cooldowns.set(userId, now);
+        // Process mining action
+        const { items, credits, xp } = randomizeMiningRewards(); // Helper function to get random items, credits, and XP
+        await decreaseDurability(userInventory); // Decrease pickaxe durability
 
-      // Fetch or create the user's profile
-      let userProfile = await Users.findOne({ where: { userId } });
+        // Update user profile (credits, XP)
+        const user = await User.findOne({ where: { userId } });
+        user.credits += credits;
+        user.xp += xp;
+        await user.save();
 
-      if (!userProfile) {
-        // If the user profile doesn't exist, create one
-        userProfile = await Users.create({
-          userId,
-          username: interaction.user.username,
-          coins: 0,
-          xp: 0,
-          inventory: JSON.stringify({}), // Initialize empty inventory
-        });
-      }
+        // Add items to inventory
+        await Promise.all(items.map(async (item) => {
+            await Inventory.create({
+                userId,
+                itemName: item.name,
+                quantity: item.quantity,
+                durability: item.durability || null, // If applicable
+            });
+        }));
 
-      // Parse the user's inventory
-      let inventory = JSON.parse(userProfile.inventory || '{}');
+        // Set cooldown
+        cooldowns.set(userId, Date.now());
 
-      // Random items, coins, and XP
-      const items = mineIcons; // Assuming mineIcons returns an object like { diamond: '💎', gold: '🥇' }
-      const randomItemKeys = Object.keys(items);
-      const foundItem = randomItemKeys[Math.floor(Math.random() * randomItemKeys.length)];
-      const itemCount = Math.floor(Math.random() * 3) + 1; // Randomly find between 1 and 3 items
+        // Create a visual message
+        let response = `⛏️ You mined and found the following:\n`;
+        response += items.map(item => `${item.icon} x${item.quantity}`).join(', ');
+        response += `\n💰 You also found ${credits} credits and earned ${xp} XP!`;
 
-      // Add the found item to the inventory
-      if (inventory[foundItem]) {
-        inventory[foundItem] += itemCount;
-      } else {
-        inventory[foundItem] = itemCount;
-      }
-
-      // Random coins and XP rewards
-      const coinsFound = Math.floor(Math.random() * 101) + 50; // Random coins between 50 and 150
-      const randomXP = Math.floor(Math.random() * 31) + 10; // Random XP between 10 and 40
-
-      // Update the user's profile with coins, XP, and the updated inventory
-      userProfile.coins += coinsFound;
-      userProfile.xp += randomXP;
-      userProfile.inventory = JSON.stringify(inventory); // Save the updated inventory as JSON
-
-      await userProfile.save(); // Save the updated user profile
-
-      // Build the response message
-      const itemEmoji = items[foundItem];
-      const responseMessage = `
-        💎 **You found ${itemCount} ${foundItem}(s) while mining!**
-        ⛏️ You earned \`${coinsFound}\` coins and gained \`${randomXP}\` XP. Keep mining for more!
-      `;
-
-      // Send the response message
-      await interaction.reply(responseMessage);
-
-    } catch (error) {
-      console.error('Error executing command mine:', error);
-      return interaction.reply('An error occurred while mining. Please try again later.');
+        // Send response
+        return interaction.reply({ content: response });
     }
-  },
 };
