@@ -13,14 +13,34 @@ client.on('guildMemberAdd', async (member) => {
     }
 });
 
-client.on('guildMemberAdd', async (member) => {
-    const guildId = member.guild.id;
-    const guildConfig = await GuildConfig.findOne({ where: { guildId } });
+   client.on('guildMemberAdd', async (member) => {
+    const guildConfig = await GuildConfig.findOne({ where: { guildId: member.guild.id } });
 
-    if (guildConfig && guildConfig.autoRoleId) {
-        const role = member.guild.roles.cache.get(guildConfig.autoRoleId);
-        if (role) {
-            member.roles.add(role).catch(console.error);
+    if (!guildConfig) return;
+
+    const rolesToAssign = [];
+
+    if (guildConfig.autoRoleId1) {
+        const role1 = member.guild.roles.cache.get(guildConfig.autoRoleId1);
+        if (role1) rolesToAssign.push(role1);
+    }
+
+    if (guildConfig.autoRoleId2) {
+        const role2 = member.guild.roles.cache.get(guildConfig.autoRoleId2);
+        if (role2) rolesToAssign.push(role2);
+    }
+
+    if (guildConfig.autoRoleId3) {
+        const role3 = member.guild.roles.cache.get(guildConfig.autoRoleId3);
+        if (role3) rolesToAssign.push(role3);
+    }
+
+    if (rolesToAssign.length > 0) {
+        try {
+            await member.roles.add(rolesToAssign);
+            console.log(`✅ Assigned roles to ${member.user.tag}: ${rolesToAssign.join(', ')}`);
+        } catch (error) {
+            console.error(`❌ Failed to assign roles to ${member.user.tag}:`, error);
         }
     }
 });
