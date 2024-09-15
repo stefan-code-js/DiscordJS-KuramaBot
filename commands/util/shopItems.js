@@ -1,38 +1,33 @@
+const { ShopItem } = require('../models');
 
-    module.exports = [
-      {
-        name: 'Fishing Rod',
-        price: 100,
-        durability:100,
-        emoji:'🎣'
-      },
-        {
-          name: 'Pickaxe',
-          price: 100,
-          durability: 170,
-          emoji: '⛏️'
-        }, 
-    {
-      name: 'Star Axe',
-      emoji: '⭐',
-      price: 175,
-      durability: 220,
-      quality: '★★★★'
-    },
-    {
-      name: 'Sparkle Axe',
-      emoji: '✨',
-      price: 600,
-      durability: 500,
-      quality: '★★★★★'
-    },
-    const shopItems = [
-    { name: 'Kunai', price: 5000, icon: emojis.kunai },
-    { name: 'Shadow Clone Jutsu', price: 5000, icon: emojis.shadowClone },
-    { name: 'Chidori', price: 10000, icon: emojis.chidori },
-    { name: 'Amaterasu', price: 15000, icon: emojis.amaterasu },
-    { name: 'XP Potion', price: 3000, icon: '🧪' }, // Boosts XP gain during hunt
-    { name: 'Coin Multiplier', price: 4000, icon: '💰' } // Increases coin drop rate during hunt
-];
-    // Add more items as needed
-  ];
+// Seeding items into the shop
+await ShopItem.bulkCreate([
+    // Common items
+    { name: 'Blue Fish', icon: '🐟', buyPrice: 50, sellPrice: 25 },
+    { name: 'Shrimp', icon: '🦐', buyPrice: 40, sellPrice: 20 },
+    { name: 'Rock', icon: '🪨', buyPrice: 30, sellPrice: 15 },
+    { name: 'Wood Chunk', icon: '🪵', buyPrice: 20, sellPrice: 10 },
+    { name: 'Pencil', icon: '✏️', buyPrice: 25, sellPrice: 10 },
+    { name: 'Briefcase', icon: '💼', buyPrice: 40, sellPrice: 20 },
+
+    // Uncommon items
+    { name: 'Treasure Chest', icon: '📦', buyPrice: 150, sellPrice: 75 },
+    { name: 'Gold Nugget', icon: '🪙', buyPrice: 120, sellPrice: 60 },
+    { name: 'CD', icon: '📀', buyPrice: 100, sellPrice: 50 },
+    { name: 'Metal Scrap', icon: '🔧', buyPrice: 80, sellPrice: 40 },
+    { name: 'Pufferfish', icon: '🐡', buyPrice: 90, sellPrice: 45 },
+    { name: 'Magnet', icon: '🧲', buyPrice: 110, sellPrice: 55 },
+
+    // Rare items
+    { name: 'Diamond', icon: '💎', buyPrice: 300, sellPrice: 150 },
+    { name: 'Lobster', icon: '🦞', buyPrice: 250, sellPrice: 125 },
+    { name: 'Explosive Material', icon: '🧨', buyPrice: 200, sellPrice: 100 },
+    { name: 'Gift Box', icon: '🎁', buyPrice: 180, sellPrice: 90 },
+    { name: 'Whale', icon: '🐋', buyPrice: 400, sellPrice: 200 },
+    { name: 'Key', icon: '🔑', buyPrice: 150, sellPrice: 75 },
+
+    // Tools
+    { name: 'Pickaxe', icon: '⛏️', buyPrice: 150, sellPrice: 75 },
+    { name: 'Fishing Rod', icon: '🎣', buyPrice: 100, sellPrice: 50 },
+    { name: 'Repair Wrench', icon: '🔧', buyPrice: 200, sellPrice: 100 }
+]);
