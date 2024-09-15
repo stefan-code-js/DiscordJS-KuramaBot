@@ -35,3 +35,31 @@ module.exports = {
     randomizeMiningRewards,
     decreaseDurability
 };
+
+// Randomly generate fishing rewards
+function randomizeFishingRewards() {
+    const items = [];
+
+    // Example fish items
+    const possibleItems = [
+        { name: 'Salmon', icon: '🐟', quantity: 1 },
+        { name: 'Tuna', icon: '🐠', quantity: 1 },
+        { name: 'Shrimp', icon: '🦐', quantity: 2 }
+    ];
+
+    // Add random fish to rewards list
+    for (let i = 0; i < Math.floor(Math.random() * 3 + 1); i++) {
+        const item = possibleItems[Math.floor(Math.random() * possibleItems.length)];
+        items.push(item);
+    }
+
+    // Random credits and XP
+    const credits = Math.floor(Math.random() * 100 + 50); // Between 50 and 150 credits
+    const xp = Math.floor(Math.random() * 30 + 10); // Between 10 and 40 XP
+
+    return { items, credits, xp };
+}
+
+module.exports = {
+    randomizeFishingRewards,
+};
