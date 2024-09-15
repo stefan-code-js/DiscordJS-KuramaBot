@@ -1,0 +1,14 @@
+const { GuildConfig } = require('./models');
+
+// Event handler for when a new member joins the guild
+client.on('guildMemberAdd', async (member) => {
+    const guildId = member.guild.id;
+    const guildConfig = await GuildConfig.findOne({ where: { guildId } });
+
+    if (guildConfig && guildConfig.welcomeChannelId) {
+        const channel = member.guild.channels.cache.get(guildConfig.welcomeChannelId);
+        if (channel) {
+            channel.send(`👋 Welcome to the server, ${member}! We're glad to have you here.`);
+        }
+    }
+});
