@@ -1,31 +1,29 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Achievement } = require('../models');
 const { MessageEmbed } = require('discord.js');
+const { User, Badge } = require('../models');
+const { badgeIcons } = require('../utils/badgeIcons');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('badges')
-        .setDescription('Displays the badges you have earned.'),
+        .setName('badge')
+        .setDescription('View your earned badges.'),
 
     async execute(interaction) {
         const userId = interaction.user.id;
+        const user = await User.findOne({ where: { userId }, include: Badge });
 
-        // Fetch the user's badges
-        const userBadges = await Achievement.findAll({ where: { userId } });
-        if (userBadges.length === 0) {
-            return interaction.reply('You haven\'t earned any badges yet. Keep playing to unlock them!');
+        if (!user || user.Badges.length === 0) {
+            return interaction.reply('❌ You haven’t earned any badges yet!');
         }
 
-        // Create a formatted list of badges
-        const badgesList = userBadges.map(badge => `${badge.badgeIcon} **${badge.badgeName}**`).join('\n');
+        const badges = user.Badges.map(badge => `${badgeIcons[badge.name]} **${badge.name}**`).join('\n');
 
-        // Create an embed to display the badges
-        const badgesEmbed = new MessageEmbed()
+        const badgeEmbed = new MessageEmbed()
             .setTitle(`${interaction.user.username}'s Badges`)
-            .setColor('#FFD700') // Gold color for achievements
-            .setDescription(badgesList)
-            .setFooter('Keep up the good work!');
+            .setColor('#FFD700')
+            .setDescription(badges)
+            .setFooter('Keep progressing to unlock more badges!');
 
-        return interaction.reply({ embeds: [badgesEmbed] });
+        return interaction.reply({ embeds: [badgeEmbed] });
     }
 };
