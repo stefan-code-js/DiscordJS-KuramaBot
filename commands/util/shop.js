@@ -8,18 +8,20 @@ module.exports = {
         .setDescription('Displays the items available for purchase.'),
 
     async execute(interaction) {
-        // Fetch available shop items from the database
+        // Fetch all items from the shop
         const items = await ShopItem.findAll();
 
-        // Create a list of items with buy/sell prices
-        const itemList = items.map(item => `${item.icon} **${item.name}**\nBuy: ${item.buyPrice} credits\nSell: ${item.sellPrice} credits`).join('\n\n');
+        // Format the shop items into a string
+        const itemList = items.map(item => 
+            `${item.icon} **${item.name}**\nBuy: ${item.buyPrice} credits\nSell: ${item.sellPrice} credits`
+        ).join('\n\n');
 
-        // Create an embed to display the shop items
+        // Create an embed for the shop display
         const shopEmbed = new MessageEmbed()
             .setTitle('🛒 Shop - Available Items')
             .setColor('#00FF00')
             .setDescription(itemList)
-            .setFooter('Use /buy <item> to purchase an item.');
+            .setFooter('Use /buy <item> to purchase, /sell <item> to sell.');
 
         return interaction.reply({ embeds: [shopEmbed] });
     }
