@@ -12,3 +12,15 @@ client.on('guildMemberAdd', async (member) => {
         }
     }
 });
+
+client.on('guildMemberAdd', async (member) => {
+    const guildId = member.guild.id;
+    const guildConfig = await GuildConfig.findOne({ where: { guildId } });
+
+    if (guildConfig && guildConfig.autoRoleId) {
+        const role = member.guild.roles.cache.get(guildConfig.autoRoleId);
+        if (role) {
+            member.roles.add(role).catch(console.error);
+        }
+    }
+});
