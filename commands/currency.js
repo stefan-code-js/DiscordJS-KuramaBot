@@ -89,3 +89,21 @@ function randomizeLootRewards() {
 
     return { items, credits, xp };
 }
+// Randomize chop rewards
+function randomizeChopRewards() {
+    const items = [];
+
+    // List of possible chop items
+    const possibleItems = [
+        { name: 'Oak Wood', icon: '🪵', quantity: 1 },
+        { name: 'Pine Wood', icon: '🌲', quantity: 1 },
+        { name: 'Maple Wood', icon: '🍁', quantity: 1 },
+        { name: 'Birch Wood', icon: '🌳', quantity: 1 },
+        { name: 'Rare Bark', icon: '🪚', quantity: 1 },
+        { name: 'Cedar Log', icon: '🌴', quantity: 1 },
+        { name: 'Hardwood', icon: '🪓', quantity: 1 },
+        { name: 'Willow Branch', icon: '🌿', quantity: 1 },
+        { name: 'Exotic Leaf', icon: '🍃', quantity: 1 },
+        { name: 'Chop Axe', icon: '🪓', quantity: 1 }
+    ];
+
