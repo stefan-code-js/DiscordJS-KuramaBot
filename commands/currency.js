@@ -58,3 +58,34 @@ function randomizeFishingRewards() {
 
     return { items, credits, xp };
 }
+
+function randomizeLootRewards() {
+    const items = [];
+
+    // List of possible loot items
+    const possibleItems = [
+        { name: 'Pencil', icon: '✏️', quantity: 1 },
+        { name: 'Dice', icon: '🎲', quantity: 1 },
+        { name: 'Music Note', icon: '🎵', quantity: 1 },
+        { name: 'Juice Box', icon: '🧃', quantity: 1 },
+        { name: 'Book', icon: '📚', quantity: 1 },
+        { name: 'CD', icon: '📀', quantity: 1 },
+        { name: 'Briefcase', icon: '💼', quantity: 1 },
+        { name: 'Lightbulb', icon: '💡', quantity: 1 },
+        { name: 'Gift Box', icon: '🎁', quantity: 1 },
+        { name: 'Key', icon: '🔑', quantity: 1 }
+    ];
+
+    // Randomly choose more than 3 items
+    const itemCount = Math.floor(Math.random() * 3 + 3); // 3 or more items
+    for (let i = 0; i < itemCount; i++) {
+        const item = possibleItems[Math.floor(Math.random() * possibleItems.length)];
+        items.push(item);
+    }
+
+    // Random credits and XP
+    const credits = Math.floor(Math.random() * 100 + 50); // 50 to 150 credits
+    const xp = Math.floor(Math.random() * 30 + 10); // 10 to 40 XP
+
+    return { items, credits, xp };
+}
