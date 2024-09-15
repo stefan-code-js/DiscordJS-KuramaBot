@@ -12,7 +12,15 @@ GuildConfig.init({
         type: DataTypes.STRING,
         allowNull: true,
     },
-    autoRoleId: {
+    autoRoleId1: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    autoRoleId2: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    autoRoleId3: {
         type: DataTypes.STRING,
         allowNull: true,
     }
