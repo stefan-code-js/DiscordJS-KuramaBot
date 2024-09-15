@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+<<<<<<< Updated upstream
 const { Inventory } = require('../models');
 
 module.exports = {
@@ -76,3 +77,88 @@ module.exports = {
         }
     }
 };
+=======
+const { Users } = require('../../models');
+const inventoryIcons = require('../util/inventoryIcons');  // Adjust path to your icons file
+const shopItems = require('../util/shopItems');
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName('inventory')
+    .setDescription('Manage your inventory')
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('show')
+        .setDescription('Shows your inventory or another user\'s')
+        .addUserOption(option =>
+          option.setName('user')
+            .setDescription('User to view the inventory of')
+        )
+    )
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('brief')
+        .setDescription('Shows a brief version of your inventory')
+    )
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('calculate')
+        .setDescription('Calculates the worth of your inventory or another user\'s')
+        .addUserOption(option =>
+          option.setName('user')
+            .setDescription('User to calculate the inventory of')
+        )
+    ),
+
+  async execute(interaction) {
+    const subcommand = interaction.options.getSubcommand();
+    const userId = interaction.user.id;
+    let targetUser = interaction.options.getUser('user') || interaction.user;
+
+    // Fetch the target user's profile
+    let userProfile = await Users.findOne({ where: { userId: targetUser.id } });
+    if (!userProfile) {
+      return interaction.reply({ content: `${targetUser.username} does not have a profile yet.`, ephemeral: true });
+    }
+
+    const inventory = JSON.parse(userProfile.inventory || '{}');
+
+    if (subcommand === 'show') {
+      // Combine duplicate items and stack them
+      const stackedInventory = Object.entries(inventory).reduce((acc, [item, count]) => {
+        if (typeof count === 'object') {
+          count = count.count || 0;
+        }
+        acc[item] = (acc[item] || 0) + count;
+        return acc;
+      }, {});
+
+      // Display full inventory with icons and stacked amounts
+      const inventoryDisplay = Object.entries(stackedInventory)
+        .map(([item, count]) => `${inventoryIcons[item] || '❓'} x${count}`)
+        .join(', ');
+
+      return interaction.reply({ content: `${targetUser.username}'s Inventory:\n${inventoryDisplay}` });
+    }
+
+    if (subcommand === 'brief') {
+      // Display a brief version (only item names with icons)
+      const inventoryDisplay = Object.keys(inventory)
+        .map(item => `${inventoryIcons[item] || '❓'}`)
+        .join(', ');
+
+      return interaction.reply({ content: `${targetUser.username}'s Brief Inventory: ${inventoryDisplay}` });
+    }
+
+    if (subcommand === 'calculate') {
+      // Calculate total worth of the inventory
+      const totalWorth = Object.keys(inventory).reduce((total, item) => {
+        // Assuming each item has a predefined value in your shopItems or a similar place
+        return total + (shopItems[item]?.value || 0) * inventory[item];
+      }, 0);
+
+      return interaction.reply({ content: `${targetUser.username}'s inventory is worth ${totalWorth} coins.` });
+    }
+  }
+};
+>>>>>>> Stashed changes

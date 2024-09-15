@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 const { ShopItem } = require('../models');
 
 // Seeding items into the shop
@@ -37,3 +38,42 @@ await ShopItem.bulkCreate([
     { name: 'Water Gem', icon: '🌊', buyPrice: 600, sellPrice: 300 },
     { name: 'Mermaid Gem', icon: '🧜', buyPrice: 650, sellPrice: 325 }
 ]);
+=======
+module.exports = {
+  'pickaxe': {
+    name: '⛏️ Pickaxe',
+    price: 500,
+    description: 'A basic pickaxe for mining.',
+  },
+  'fishingRod': {
+    name: '🎣 Fishing Rod',
+    price: 300,
+    description: 'A fishing rod for catching fish.'
+  },
+  'axe': {
+    name: '🪓 Axe',
+    price: 200,
+    description: 'An axe for chopping trees.'
+  },
+  'crateKey': {
+    name: '🗝️ Crate Key',
+    price: 1000,
+    description: 'A key to open crates.'
+  },
+  'fireShard': {
+    name: '🔥 Fire Shard',
+    price: 1500,
+    description: 'A shard to craft a Fire Pickaxe.'
+  },
+  'miningPotion': {
+    name: '🧪 Mining Potion',
+    price: 700,
+    description: 'A potion that enhances mining abilities.'
+  },
+  'fishingPotion': {
+    name: '🧪 Fishing Potion',
+    price: 700,
+    description: 'A potion that enhances fishing abilities.'
+  }
+};
+>>>>>>> Stashed changes

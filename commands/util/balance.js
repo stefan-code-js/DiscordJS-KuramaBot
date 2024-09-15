@@ -7,21 +7,13 @@ module.exports = {
     .setDescription('Check your current balance'),
 
   async execute(interaction) {
-    // Fetch or create the user's profile
-    let userProfile = await Users.findOne({ where: { userId: interaction.user.id } });
+    const userId = interaction.user.id;
+    const userProfile = await Users.findOne({ where: { userId } });
 
     if (!userProfile) {
-      return interaction.reply({ content: 'You don\'t have a balance yet. Try earning some coins by mining or fishing!', ephemeral: true });
+      return interaction.reply('You do not have a profile yet.');
     }
 
-    const balanceMessage = `
-💰 **Your Balance**:
-
-**Coins**: ${userProfile.coins.toLocaleString()} coins
-
-Earn more coins by participating in activities like mining or fishing!
-    `;
-
-    await interaction.reply(balanceMessage);
-  }
+    return interaction.reply(`💰 You have ${userProfile.coins} coins.`);
+  },
 };

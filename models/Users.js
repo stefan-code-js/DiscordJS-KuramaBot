@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      primaryKey: true
     },
     username: {
       type: DataTypes.STRING,
@@ -67,7 +68,28 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: JSON.stringify({}),
     },
+    crates: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    keys: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    equipment: {
+      type: DataTypes.JSON,
+      defaultValue: {},
+    },
+    mop_findings: {
+      type: DataTypes.JSON,
+      defaultValue: [],
+    },
+    coins: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
   });
+
 
   return Users;
 };

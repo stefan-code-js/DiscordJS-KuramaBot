@@ -1,0 +1,21 @@
+[
+    {
+      "difficulty": "easy",
+      "question": "Who is Naruto's best friend?",
+      "options": ["Sasuke Uchiha", "Sakura Haruno", "Hinata Hyuga", "Kakashi Hatake"],
+      "correctAnswer": "A"
+    },
+    {
+      "difficulty": "medium",
+      "question": "Who was the Third Hokage?",
+      "options": ["Minato Namikaze", "Hiruzen Sarutobi", "Tsunade", "Naruto Uzumaki"],
+      "correctAnswer": "B"
+    },
+    {
+      "difficulty": "hard",
+      "question": "What is the true identity of Tobi?",
+      "options": ["Madara Uchiha", "Obito Uchiha", "Nagato", "Itachi Uchiha"],
+      "correctAnswer": "B"
+    }
+  ]
+  

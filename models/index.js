@@ -6,7 +6,6 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
-// Initialize Sequelize instance
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -14,7 +13,6 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-// Dynamically load all model files in the directory
 fs.readdirSync(__dirname)
   .filter(file => {
     return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
@@ -24,14 +22,13 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-// If any model associations are defined, apply them
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
-// Sync all models to the database without forcing table drops
+// Sync all models to the database
 sequelize.sync()
   .then(() => {
     console.log('Database synced successfully!');
