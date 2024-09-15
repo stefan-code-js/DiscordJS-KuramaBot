@@ -1,4 +1,4 @@
-const { REST, Routes } = require('discord.js');
+                                                           const { REST, Routes } = require('discord.js');
 const { clientId, guildId, token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -24,15 +24,15 @@ for (const folder of commandFolders) {
   }
 }
 
-const rest = new REST().setToken(token);
+const rest = new REST({ version: '10' }).setToken(token);
 
 (async () => {
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-    // Deploy the commands to a specific guild or globally
+    // Deploy the commands to the specific guild or globally
     const data = await rest.put(
-      Routes.applicationGuildCommands(clientId, guildId), // Use Routes.applicationCommands(clientId) for global
+      Routes.applicationGuildCommands(clientId, guildId), // For global, use Routes.applicationCommands(clientId)
       { body: commands },
     );
 
@@ -40,4 +40,4 @@ const rest = new REST().setToken(token);
   } catch (error) {
     console.error(error);
   }
-})();                                                           
+})();
