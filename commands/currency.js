@@ -28,3 +28,33 @@ function randomizeMiningRewards() {
 
     return { items, credits, xp };
 }
+function randomizeFishingRewards() {
+    const items = [];
+
+    // List of possible fishing items
+    const possibleItems = [
+        { name: 'Blue Fish', icon: '🐟', quantity: 1 },
+        { name: 'Shrimp', icon: '🦐', quantity: 2 },
+        { name: 'Pufferfish', icon: '🐡', quantity: 1 },
+        { name: 'Clownfish', icon: '🐠', quantity: 1 },
+        { name: 'Lobster', icon: '🦞', quantity: 1 },
+        { name: 'Squid', icon: '🦑', quantity: 1 },
+        { name: 'Whale', icon: '🐋', quantity: 1 },
+        { name: 'Seashell', icon: '🐚', quantity: 2 },
+        { name: 'Turtle', icon: '🐢', quantity: 1 },
+        { name: 'Fishing Rod', icon: '🎣', quantity: 1 }
+    ];
+
+    // Randomly choose more than 3 items
+    const itemCount = Math.floor(Math.random() * 3 + 3); // 3 or more items
+    for (let i = 0; i < itemCount; i++) {
+        const item = possibleItems[Math.floor(Math.random() * possibleItems.length)];
+        items.push(item);
+    }
+
+    // Random credits and XP
+    const credits = Math.floor(Math.random() * 100 + 50); // 50 to 150 credits
+    const xp = Math.floor(Math.random() * 30 + 10); // 10 to 40 XP
+
+    return { items, credits, xp };
+}
