@@ -1,0 +1,85 @@
+{
+  "Economy": {
+    "description": "Commands related to the economy system.",
+    "commands": [
+      {
+        "name": "/mine",
+        "description": "Mine for valuable minerals and items."
+      },
+      {
+        "name": "/fish",
+        "description": "Go fishing and catch some rare fish!"
+      },
+      {
+        "name": "/loot",
+        "description": "Loot for random items and credits."
+      },
+      {
+        "name": "/shop",
+        "description": "Displays the items available for purchase."
+      },
+      {
+        "name": "/buy",
+        "description": "Buy an item from the shop."
+      },
+      {
+        "name": "/sell",
+        "description": "Sell an item from your inventory."
+      }
+    ]
+  },
+  "Moderation": {
+    "description": "Commands for moderating the server.",
+    "commands": [
+      {
+        "name": "/kick",
+        "description": "Kick a member from the server."
+      },
+      {
+        "name": "/ban",
+        "description": "Ban a member from the server."
+      },
+      {
+        "name": "/mute",
+        "description": "Mute a member in the server."
+      },
+      {
+        "name": "/unmute",
+        "description": "Unmute a member in the server."
+      },
+      {
+        "name": "/warn",
+        "description": "Warn a member."
+      },
+      {
+        "name": "/clear",
+        "description": "Clear messages from a channel."
+      }
+    ]
+  },
+  "Miscellaneous": {
+    "description": "Other commands that are useful for various tasks.",
+    "commands": [
+      {
+        "name": "/profile",
+        "description": "View or set your profile details."
+      },
+      {
+        "name": "/inventory",
+        "description": "Manage and view your inventory."
+      },
+      {
+        "name": "/trivia",
+        "description": "Answer a trivia question to win credits!"
+      },
+      {
+        "name": "/gamble",
+        "description": "Gamble your credits and try your luck!"
+      },
+      {
+        "name": "/slots",
+        "description": "Try your luck at the slot machine!"
+      }
+    ]
+  }
+}
