@@ -46,8 +46,25 @@ module.exports = {
                 { name: 'Fishing Rod', quantity: 1 },
                 { name: 'Water Gem', quantity: 1 }, // New rare item
                 { name: 'Gift Box', quantity: 1 }
-            ]
-        };
+            ],
+                // New Axe Recipes
+    'Comet Axe': [
+        { name: 'Axe', quantity: 1 },
+        { name: 'Star Gem', quantity: 2 },
+        { name: 'Comet Fragment', quantity: 3 }
+    ],
+    'Star Axe': [
+        { name: 'Axe', quantity: 1 },
+        { name: 'Diamond', quantity: 2 },
+        { name: 'Star Fragment', quantity: 3 }
+    ],
+    'Sparkle Axe': [
+        { name: 'Axe', quantity: 1 },
+        { name: 'Sparkle Gem', quantity: 2 },
+        { name: 'Rare Bark', quantity: 4 }
+    ]
+};
+        
 
         const recipe = castRecipes[toolName];
         if (!recipe) {
