@@ -1,8 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { User, Inventory } = require('../models');
 const { randomizeMiningRewards, decreaseDurability } = require('../utils/currency');
-const { MessageActionRow, MessageButton } = require('discord.js');
-const cooldowns = new Map(); // To handle command cooldowns.
+const cooldowns = new Map(); // Cooldown system
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,7 +13,7 @@ module.exports = {
 
         // Check for cooldown
         if (cooldowns.has(userId)) {
-            const expirationTime = cooldowns.get(userId) + 300000; // 5 minutes cooldown
+            const expirationTime = cooldowns.get(userId) + 300000; // 5-minute cooldown
             if (Date.now() < expirationTime) {
                 const timeLeft = (expirationTime - Date.now()) / 1000;
                 return interaction.reply(`⛏️ You need to wait ${Math.ceil(timeLeft)} seconds before mining again.`);
@@ -27,11 +26,11 @@ module.exports = {
             return interaction.reply('⛏️ You don\'t have a pickaxe, or your pickaxe is broken. Buy one from the shop and equip it!');
         }
 
-        // Process mining action
-        const { items, credits, xp } = randomizeMiningRewards(); // Helper function to get random items, credits, and XP
-        await decreaseDurability(userInventory); // Decrease pickaxe durability
+        // Randomize rewards
+        const { items, credits, xp } = randomizeMiningRewards(); 
+        await decreaseDurability(userInventory); 
 
-        // Update user profile (credits, XP)
+        // Update user profile
         const user = await User.findOne({ where: { userId } });
         user.credits += credits;
         user.xp += xp;
@@ -43,19 +42,17 @@ module.exports = {
                 userId,
                 itemName: item.name,
                 quantity: item.quantity,
-                durability: item.durability || null, // If applicable
             });
         }));
 
         // Set cooldown
         cooldowns.set(userId, Date.now());
 
-        // Create a visual message
-        let response = `⛏️ You mined and found the following:\n`;
+        // Create response format like in the provided screenshot
+        let response = `⛏️ While mining, you found `;
         response += items.map(item => `${item.icon} x${item.quantity}`).join(', ');
-        response += `\n💰 You also found ${credits} credits and earned ${xp} XP!`;
+        response += ` and ${credits} credits!`;
 
-        // Send response
-        return interaction.reply({ content: response });
+        return interaction.reply(response);
     }
 };
