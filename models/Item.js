@@ -1,19 +1,28 @@
-module.exports = (sequelize, DataTypes) => {
-  const Item = sequelize.define('Item', {
-    itemId: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    itemName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    }
-  });
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-  return Item;
-};
+class Item extends Model {}
+
+Item.init({
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    value: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    rarity: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: false, // e.g., 'fish', 'tool', 'mineral'
+    },
+}, {
+    sequelize,
+    modelName: 'Item',
+});
+
+module.exports = Item;
