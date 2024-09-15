@@ -31,3 +31,9 @@ await ShopItem.bulkCreate([
     { name: 'Fishing Rod', icon: '🎣', buyPrice: 100, sellPrice: 50 },
     { name: 'Repair Wrench', icon: '🔧', buyPrice: 200, sellPrice: 100 }
 ]);
+await ShopItem.bulkCreate([
+    { name: 'Star Gem', icon: '🌟', buyPrice: 500, sellPrice: 250 },
+    { name: 'Fire Gem', icon: '🔥', buyPrice: 550, sellPrice: 275 },
+    { name: 'Water Gem', icon: '🌊', buyPrice: 600, sellPrice: 300 },
+    { name: 'Mermaid Gem', icon: '🧜', buyPrice: 650, sellPrice: 325 }
+]);
