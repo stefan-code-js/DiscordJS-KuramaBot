@@ -1,28 +1,27 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const User = require('./User');
 
-class Item extends Model {}
+class Character
 
-Item.init({
-    name: {
+ extends Model {}
+
+Character.init({
+    userId: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    value: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    rarity: {
+    characterName: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    type: {
+    ability: {
         type: DataTypes.STRING,
-        allowNull: false, // e.g., 'fish', 'tool', 'mineral'
+        allowNull: false,
     },
 }, {
     sequelize,
-    modelName: 'Item',
+    modelName: 'Character',
 });
 
-module.exports = Item;
+module.exports = Character;

@@ -1,28 +1,28 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-class Item extends Model {}
+class ShopItem extends Model {}
 
-Item.init({
+ShopItem.init({
     name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    value: {
+    buyPrice: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    rarity: {
-        type: DataTypes.STRING,
+    sellPrice: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
-    type: {
+    icon: {
         type: DataTypes.STRING,
-        allowNull: false, // e.g., 'fish', 'tool', 'mineral'
+        allowNull: false, // Emoji or icon for the item
     },
 }, {
     sequelize,
-    modelName: 'Item',
+    modelName: 'ShopItem',
 });
 
-module.exports = Item;
+module.exports = ShopItem;
